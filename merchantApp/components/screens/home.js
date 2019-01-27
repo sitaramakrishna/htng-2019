@@ -19,7 +19,8 @@ import {
     RkTabView,
     RkButton,
     RkCalendar,
-    RkBadge
+    RkBadge,
+    RkCard
 } from 'react-native-ui-kitten';
 import CalendarPicker from 'react-native-calendar-picker';
 import {GradientButton} from '../gradientButton/index';
@@ -48,42 +49,43 @@ export default class Home extends React.Component {
     render() {
         const { selectedStartDate } = this.state;
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
-        let guestList = ["Haoyang Li", "SRK", "Sandeep"];
+        let guestList = ["SRK M", "Sandeep H", "Haoyang Li", "Tom J", "Jerry G"];
         return (
-            <View style={styles.container}>
-                <View style={styles.calendar}>
-                    <CalendarPicker
-                        onDateChange={this.onDateChange}
-                        selectedDayColor="#D8AAF3"
-                        textStyle={styles.textStyle}
-                        todayBackgroundColor='#7aadff'
-                    />
-                
-                    <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'space-between'}}>
-                        <Text style={styles.textStyle}>SELECTED DATE: </Text>
-                        <Text style={styles.textStyle}>{ startDate }</Text>
+            <ScrollView contentContainerStyle={styles.container}>
+                <RkCard rkType='shadowed' style={{borderRadius: 15, marginTop: 15}}>
+                    <View style={styles.calendar}>
+                        <CalendarPicker
+                            onDateChange={this.onDateChange}
+                            selectedDayColor="#D8AAF3"
+                            textStyle={styles.textStyle}
+                            todayBackgroundColor='#7aadff'
+                        />
+            
+                        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'space-between'}}>
+                            <Text style={styles.textStyle}>SELECTED DATE: </Text>
+                            <Text style={styles.textStyle}>{ startDate }</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={{flex: 1}}>
-                    {guestList.map((data, index) => {
-                        return (
-                            <View style={{marginTop: 1}} key={index}>
-                                <RkButton rkType='user'
-                                    onPress={() => this.props.navigation.navigate('Details', {
-                                        name: data,
-                                    })}
+                    <View style={{flex: 1}}>
+                        {guestList.map((data, index) => {
+                            return (
+                                <RkButton rkType='user' key={index}
+                                          onPress={() => this.props.navigation.navigate('Details', {
+                                              name: data
+                                          })}
+                                          style={{marginTop: 10}}
                                 >
-                                    <LinearGradient colors={['#DEE8F8', '#B860ED', '#E5D4F1']} style={styles.linearGradient}>
+                                    <LinearGradient colors={['#DEE8F8', '#B860ED']} style={styles.linearGradient}>
                                         <Text style={styles.buttonText}>
-                                            {data}
+                                            {data} Reservations
                                         </Text>
                                     </LinearGradient>
                                 </RkButton>
-                            </View>
-                        )
-                    })}
-                </View>
-            </View>
+                            )
+                        })}
+                    </View>
+                </RkCard>   
+            </ScrollView>
         )
     }
 }
@@ -93,13 +95,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
     },
     calendar: {
         flex: 0.9,
         backgroundColor: 'white',
         marginTop: 5,
         height: 150,
+        borderRadius: 15
     },
     welcome: {
         fontSize: 20,
@@ -119,11 +122,12 @@ const styles = StyleSheet.create({
         width: scale(250),
     },
     linearGradient: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         height: 40,
         width: Dimensions.get('window').width - 50,
-        borderRadius: 5
+        borderRadius: 5,
     },
     buttonText: {
         fontSize: 20,
@@ -143,8 +147,7 @@ const styles = StyleSheet.create({
 });
 
 RkTheme.setType('RkButton', 'user', {
-    height: 40,
     width: Dimensions.get('window').width - 50,
-    borderRadius: 10,
+    //borderRadius: 10,
     backgroundColor: 'transparent',
 });
