@@ -55,13 +55,6 @@ export default class Details extends React.Component {
                     <Text style={styles.infoTitle}>DoB: </Text>
                     <Text style={styles.infoTitle}>Small Talk:  Birthday is within 10 days</Text>
                 </View>
-                {/*<View style={{flex: 1}}>*/}
-                    {/*<View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>*/}
-                        {/*<RkChoice rkType='radio star' style={styles.radio}/>*/}
-                        {/*<Text style={styles.statusTitle}>Prepare for Check In</Text>*/}
-                    {/*</View>*/}
-                    {/**/}
-                {/*</View>*/}
                 <View style={{flex: 1, marginLeft: 30}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
