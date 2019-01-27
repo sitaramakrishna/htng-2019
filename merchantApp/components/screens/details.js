@@ -88,6 +88,17 @@ export default class Details extends React.Component {
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
                                     <RkChoice rkType='posNeg' style={styles.radio}/>
+                                    <Text style={styles.statusTitle}>Check In</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </RkChoiceGroup>
+                    </View>
+    
+                    <View style={{marginTop: 20}}>
+                        <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
+                            <TouchableOpacity choiceTrigger>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <RkChoice rkType='posNeg' style={styles.radio}/>
                                     <Text style={styles.statusTitle}>Check Out</Text>
                                 </View>
                             </TouchableOpacity>
