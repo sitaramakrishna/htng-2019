@@ -45,7 +45,7 @@ export default class Details extends React.Component {
             verifyIdentity: false,
             activateKeys: false,
         };
-        //this.navigationOptions.title = this.props.navigation.state.params.name;
+        this.showAlert = this.showAlert.bind(this);
     }
 
     componentDidMount() {
@@ -57,7 +57,20 @@ export default class Details extends React.Component {
             this.setState({generateKeys: true});
         }, 6000);
     }
-
+    
+    showAlert() {
+        setTimeout(() => {
+            Alert.alert(
+                'Info',
+                'e-Key has been sent to guest',
+                [
+                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+            )
+        }, 1000);
+    }
+    
     render() {
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'Guest');
@@ -114,6 +127,7 @@ export default class Details extends React.Component {
                                 </View>
                             </TouchableOpacity>
                         </RkChoiceGroup>
+                        {this.state.generateKeys && this.showAlert()}
                     </View>
                     <View style={{marginTop: 10}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
