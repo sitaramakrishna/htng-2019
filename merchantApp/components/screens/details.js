@@ -10,7 +10,8 @@ import {
     StyleSheet,
     NetInfo,
     Button,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 
 import {
@@ -32,16 +33,31 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default class Details extends React.Component {
     static navigationOptions = {
-        title: 'Details'
+        title: 'Reservation details'
     };
-    
+
     constructor(props) {
         super(props);
         this.state = {
             selectedStartDate: null,
+            prepareCheckIn: false,
+            generateKeys: false,
+            verifyIdentity: false,
+            activateKeys: false,
         };
+        //this.navigationOptions.title = this.props.navigation.state.params.name;
     }
-    
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({prepareCheckIn: true});
+        }, 3000);
+
+        setTimeout(() => {
+            this.setState({generateKeys: true});
+        }, 6000);
+    }
+
     render() {
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'Guest');
@@ -50,21 +66,25 @@ export default class Details extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <Text style={styles.infoTitle}>First name: {firstName}</Text>
-                    <Text style={styles.infoTitle}>Last name: {lastName}</Text>
-                    <Text style={styles.infoTitle}>DoB: </Text>
-                    <Text style={styles.infoTitle}>Small Talk:  Birthday is within 10 days</Text>
+                    <Text style={styles.infoTitle}>Name: {firstName}</Text>
+                    <Text style={styles.infoTitle}>DoB: Feb 6th</Text>
+                    <Text style={styles.infoTitle}>Small Talk: This is his 5th visit</Text>
+                    <Text style={styles.infoTitle}>Fun fact:  Birthday is within 10 days</Text>
+
+
                 </View>
                 <View style={{flex: 1, marginLeft: 30}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <RkChoice rkType='posNeg' style={styles.radio}/>
+                                    {this.state.prepareCheckIn ? <RkChoice selected rkType='posNeg' style={styles.radio}/>
+                                        : <ActivityIndicator size="small" color="#8f8f8f" />
+                                    }
                                     <Text style={styles.statusTitle}>Prepare for Check In</Text>
                                 </View>
                             </TouchableOpacity>
                         </RkChoiceGroup>
-    
+
                     <View style={{marginTop: 20}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
@@ -75,18 +95,30 @@ export default class Details extends React.Component {
                             </TouchableOpacity>
                         </RkChoiceGroup>
                     </View>
-    
+
                     <View style={{marginTop: 20}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                                    <RkChoice rkType='posNeg' style={styles.radio}/>
-                                    <Text style={styles.statusTitle}>Check In</Text>
+                                    {this.state.generateKeys ? <RkChoice selected rkType='posNeg' style={styles.radio}/>
+                                        : <ActivityIndicator size="small" color="#8f8f8f" />
+                                    }
+                                    <Text style={styles.statusTitle}>Generate Keys</Text>
                                 </View>
                             </TouchableOpacity>
                         </RkChoiceGroup>
                     </View>
-    
+                    <View style={{marginTop: 20}}>
+                        <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
+                            <TouchableOpacity choiceTrigger>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    {<RkChoice rkType='posNeg' style={styles.radio}/>
+                                    }
+                                    <Text style={styles.statusTitle}>Activate Keys</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </RkChoiceGroup>
+                    </View>
                     <View style={{marginTop: 20}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
@@ -120,8 +152,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     infoTitle: {
-        fontFamily: 'Gill Sans', 
-        fontSize: 20, 
+        fontFamily: 'Gill Sans',
+        fontSize: 20,
         paddingTop: 10
     },
     statusTitle: {

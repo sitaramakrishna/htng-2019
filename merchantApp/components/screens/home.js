@@ -9,7 +9,8 @@ import {
     AppState,
     StyleSheet,
     NetInfo,
-    Button
+    Button,
+    ActivityIndicator
 } from 'react-native';
 
 import {
@@ -18,6 +19,7 @@ import {
     RkTheme,
     RkTabView,
     RkButton,
+    RkChoice,
     RkCalendar,
     RkBadge,
     RkCard
@@ -26,30 +28,57 @@ import CalendarPicker from 'react-native-calendar-picker';
 import {GradientButton} from '../gradientButton/index';
 import {scaleVertical, scale} from "../utils/scale";
 import LinearGradient from 'react-native-linear-gradient';
+import _ from 'lodash';
+
 
 export default class Home extends React.Component {
     static navigationOptions = {
         title: 'Reservations',
     };
-    
+
     constructor(props) {
         super(props);
         this.state = {
             selectedStartDate: null,
+            guestsList: ["John", "Mike", "Krishna"],
+            nearbyCustomer: 0,
         };
         this.onDateChange = this.onDateChange.bind(this);
+        this.guestsList = ["John", "Mike", "Krishna", "Jerry", 'Michael', 'Barry'];
     }
-    
+
     onDateChange(date) {
+        let a = [];
+        for (let i = this.guestsList.length - 1; i > 2; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            if(a.indexOf(this.guestsList[j]) === -1) {
+                a.push(this.guestsList[j]);
+            }
+        }
         this.setState({
             selectedStartDate: date,
+            guestsList: a
         });
     }
 
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({nearbyCustomer: 1});
+        }, 5000);
+        setTimeout(() => {
+            this.setState({nearbyCustomer: 2});
+        }, 10000);
+    }
+    shuffleGuests(guests) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
     render() {
         const { selectedStartDate } = this.state;
         const startDate = selectedStartDate ? selectedStartDate.toString() : '';
-        let guestList = ["SRK M", "Sandeep H", "Haoyang Li", "Tom J", "Jerry G"];
         return (
             <ScrollView contentContainerStyle={styles.container}>
                 <RkCard rkType='shadowed' style={{borderRadius: 15, marginTop: 15}}>
@@ -60,14 +89,14 @@ export default class Home extends React.Component {
                             textStyle={styles.textStyle}
                             todayBackgroundColor='#7aadff'
                         />
-            
-                        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'space-between'}}>
+
+                        {/*<View style={{flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'space-between'}}>
                             <Text style={styles.textStyle}>SELECTED DATE: </Text>
                             <Text style={styles.textStyle}>{ startDate }</Text>
-                        </View>
+                        </View>*/}
                     </View>
                     <View style={{flex: 1}}>
-                        {guestList.map((data, index) => {
+                        {this.state.guestsList.map((data, index) => {
                             return (
                                 <RkButton rkType='user' key={index}
                                           onPress={() => this.props.navigation.navigate('Details', {
@@ -75,16 +104,22 @@ export default class Home extends React.Component {
                                           })}
                                           style={{marginTop: 10}}
                                 >
-                                    <LinearGradient colors={['#DEE8F8', '#B860ED']} style={styles.linearGradient}>
+                                    <LinearGradient colors={['#7C79F7', '#7C79F7']} style={styles.linearGradient}>
                                         <Text style={styles.buttonText}>
-                                            {data} Reservations
+                                            {data}'s Reservation
                                         </Text>
                                     </LinearGradient>
+                                    {this.state.nearbyCustomer === 1 && index === 0 ? <ActivityIndicator size="small" color="#8f8f8f" />
+                                        : null
+                                    }
+                                    {this.state.nearbyCustomer === 2 && index === 0 ? <RkChoice selected rkType='posNeg' style={styles.radio}/>
+                                        : null
+                                    }
                                 </RkButton>
                             )
                         })}
                     </View>
-                </RkCard>   
+                </RkCard>
             </ScrollView>
         )
     }
@@ -123,11 +158,11 @@ const styles = StyleSheet.create({
     },
     linearGradient: {
         flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         height: 40,
-        width: Dimensions.get('window').width - 50,
-        borderRadius: 5,
+        borderRadius: 2,
     },
     buttonText: {
         fontSize: 20,
