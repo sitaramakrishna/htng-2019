@@ -65,15 +65,22 @@ export default class Details extends React.Component {
         const lastName = name.toString().split(" ")[1];
         return (
             <View style={styles.container}>
-                <View style={styles.top}>
-                    <Text style={styles.infoTitle}>Name: {firstName}</Text>
-                    <Text style={styles.infoTitle}>DoB: Feb 6th</Text>
-                    <Text style={styles.infoTitle}>Small Talk: This is his 5th visit</Text>
-                    <Text style={styles.infoTitle}>Fun fact:  Birthday is within 10 days</Text>
-
-
-                </View>
-                <View style={{flex: 1, marginLeft: 30}}>
+                <LinearGradient
+                    colors={["#7C79F7", "#7C79F7"]}
+                    start={{ x: 0.0, y: 0.5 }}
+                    end={{ x: 1, y: 0.5 }}
+                    style={[styles.cardStyle, {flex: 0.4}]}
+                >
+                    <View style={styles.top}>
+                        <Text style={styles.infoTitle}>{firstName}</Text>
+                        <Text style={styles.infoTitle}>Birth date:  Feb 6th</Text>
+                        <Text style={styles.infoTitle}>Talking points</Text>
+                        <Text style={styles.infoTitle}>  &#8226;  5th visit</Text>
+                        <Text style={styles.infoTitle}>  &#8226;  Birthday is within 10 days</Text>
+                    </View>
+                </LinearGradient>
+                <View><Text style={{fontFamily: 'Gill Sans', fontSize: 27, marginLeft: 20, marginTop: 5}}>Process</Text></View>
+                <View style={{flex: 1, marginLeft: 20}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -85,7 +92,7 @@ export default class Details extends React.Component {
                             </TouchableOpacity>
                         </RkChoiceGroup>
 
-                    <View style={{marginTop: 20}}>
+                    <View style={{marginTop: 10}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -96,7 +103,7 @@ export default class Details extends React.Component {
                         </RkChoiceGroup>
                     </View>
 
-                    <View style={{marginTop: 20}}>
+                    <View style={{marginTop: 10}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -108,7 +115,7 @@ export default class Details extends React.Component {
                             </TouchableOpacity>
                         </RkChoiceGroup>
                     </View>
-                    <View style={{marginTop: 20}}>
+                    <View style={{marginTop: 10}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -119,7 +126,7 @@ export default class Details extends React.Component {
                             </TouchableOpacity>
                         </RkChoiceGroup>
                     </View>
-                    <View style={{marginTop: 20}}>
+                    <View style={{marginTop: 10}}>
                         <RkChoiceGroup rkType='bordered' style={styles.statusButtonStyle}>
                             <TouchableOpacity choiceTrigger>
                                 <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -138,15 +145,22 @@ export default class Details extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
+    },
+    cardStyle: {
+        padding: 15,
+        margin: 15,
+        justifyContent: 'center',
+        borderColor: 'transparent',
+        borderWidth: 1,
+        borderRadius: 15,
+        backgroundColor: 'white'
     },
     textStyle: {
         fontFamily: 'Gill Sans',
     },
     top: {
-        flex: 0.4,
         flexDirection: 'column',
-        marginTop: 20,
         marginLeft: 30,
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
@@ -154,20 +168,24 @@ const styles = StyleSheet.create({
     infoTitle: {
         fontFamily: 'Gill Sans',
         fontSize: 20,
-        paddingTop: 10
+        paddingTop: 10,
+        color: 'white'
     },
     statusTitle: {
         fontFamily: 'Gill Sans',
         fontSize: 20,
         paddingTop: 10,
-        marginLeft: 20
+        marginLeft: 20,
+        color: 'black'
     },
     radio: {
         marginTop: 5,
     },
     statusButtonStyle: {
-        width: Dimensions.get('window').width - 60,
+        width: Dimensions.get('window').width - 40,
         marginRight: 20,
-        marginTop: 10
+        marginTop: 10,
+        backgroundColor: 'white',
+        borderRadius: 15,
     }
 });
