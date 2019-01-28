@@ -64,10 +64,10 @@ export default class Home extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({nearbyCustomer: 1});
-        }, 5000);
+        }, 30000);
         setTimeout(() => {
             this.setState({nearbyCustomer: 2});
-        }, 10000);
+        }, 40000);
     }
     shuffleGuests(guests) {
         for (let i = a.length - 1; i > 0; i--) {
